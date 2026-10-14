@@ -18,7 +18,7 @@ tipo_equipo = st.sidebar.selectbox("Equipo", ["Disyuntor", "Contactor", "Transfo
 
 # Límites absolutos según equipo
 limites = {
-    "Disyuntor": {"advertencia": 60.0, "critico": 80.0},
+    "Disyuntor": {"advertencia": 40.0, "critico": 80.0},
     "Contactor": {"advertencia": 65.0, "critico": 85.0},
     "Transformador": {"advertencia": 70.0, "critico": 90.0},
     "Motor": {"advertencia": 75.0, "critico": 95.0}
