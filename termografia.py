@@ -45,31 +45,31 @@ col2.metric("Fase S", f"{temp_s:.1f} °C")
 col3.metric("Fase T", f"{temp_t:.1f} °C")
 col4.metric("ΔT Máximo", f"{delta_t_fases:.1f} °C")
 
-# --- DIAGNÓSTICO NORMATIVO ---
+# --- DIAGNÓSTICO NORMATIVO (TEXTO PLANO) ---
 st.subheader("Diagnóstico Normativo")
 
 if delta_t_fases <= 3.0:
-    st.success("Condición Normal (NETA): Diferencia menor a 3 °C. Parámetros habituales de operación.")
+    st.text("Condición Normal (NETA): Diferencia menor a 3 °C. Parámetros habituales de operación.")
 elif 4.0 <= delta_t_fases <= 15.0:
-    st.warning("Anomalía Menor (NETA): Diferencia entre 4 °C y 15 °C. Programar revisión de seguimiento.")
+    st.text("Anomalía Menor (NETA): Diferencia entre 4 °C y 15 °C. Programar revisión de seguimiento.")
 elif 16.0 <= delta_t_fases <= 40.0:
-    st.error("Anomalía Grave (NETA): Diferencia entre 16 °C y 40 °C. Reparación prioritaria recomendada.")
+    st.text("Anomalía Grave (NETA): Diferencia entre 16 °C y 40 °C. Reparación prioritaria recomendada.")
 else:
-    st.error("Anomalía Crítica (NETA): Diferencia superior a 40 °C. Riesgo inminente de falla.")
+    st.text("Anomalía Crítica (NETA): Diferencia superior a 40 °C. Riesgo inminente de falla.")
 
 if temp_max >= lim_crit:
-    st.error(f"Alerta Absoluta: La temperatura máxima ({temp_max:.1f} °C) excede el límite crítico de {lim_crit} °C.")
+    st.text(f"Alerta Absoluta: La temperatura máxima ({temp_max:.1f} °C) excede el límite crítico de {lim_crit} °C.")
 elif temp_max >= lim_adv:
-    st.warning(f"Aviso Absoluto: La temperatura máxima ({temp_max:.1f} °C) supera el umbral de advertencia de {lim_adv} °C.")
+    st.text(f"Aviso Absoluto: La temperatura máxima ({temp_max:.1f} °C) supera el umbral de advertencia de {lim_adv} °C.")
 else:
-    st.info(f"Temperatura Absoluta Normal para {tipo_equipo.lower()}.")
+    st.text(f"Temperatura Absoluta Normal para {tipo_equipo.lower()}.")
 
 # --- GRÁFICO ---
 st.subheader("Gráfico de Temperaturas por Fase")
 
 fases = ['Fase R', 'Fase S', 'Fase T']
 temperaturas = [temp_r, temp_s, temp_t]
-colores = ['#2b5c8f', '#d95f02', '#1b9e77']
+colores = ['#4f4f4f', '#6f6f6f', '#8f8f8f']
 
 fig = go.Figure(data=[
     go.Bar(
@@ -81,13 +81,13 @@ fig = go.Figure(data=[
     )
 ])
 
-fig.add_hline(y=lim_adv, line_dash="dash", line_color="#e6ab02", annotation_text=f"Advertencia ({lim_adv}°C)")
-fig.add_hline(y=lim_crit, line_dash="dash", line_color="#7570b3", annotation_text=f"Crítico ({lim_crit}°C)")
+fig.add_hline(y=lim_adv, line_dash="dash", line_color="#aaaaaa", annotation_text=f"Advertencia ({lim_adv}°C)")
+fig.add_hline(y=lim_crit, line_dash="dash", line_color="#333333", annotation_text=f"Crítico ({lim_crit}°C)")
 
 fig.update_layout(
     yaxis_title="Temperatura (°C)",
     yaxis=dict(range=[0, max(120, temp_max + 20)]),
-    template="plotly_white",
+    template="plotly_dark",
     margin=dict(t=30, b=30, l=30, r=30)
 )
 
